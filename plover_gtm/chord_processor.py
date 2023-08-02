@@ -5,7 +5,7 @@ fingerspelled word with its steno equivalent. If the word is not in
 the user's dictionary, it prompts the user to enter a new chord for
 that word.
 """
-
+from plover.formatting import _Action
 from plover.engine import StenoEngine
 from plover.formatting import RetroFormatter
 import plover.log as log
@@ -32,8 +32,8 @@ def looksert(engine: StenoEngine, _arg: str):
     # Log the shortest steno strokes for the word
     log.info(f"Shortest steno strokes for word '{last_word}': {shortest_steno_strokes}")
 
-    # Erase the last word by sending the appropriate number of backspaces
-    engine.send_engine_command(f"send_backspaces:{len(last_word)}")
+    # Create a new action to replace the last word with the steno strokes
+    new_action = _Action(prev_replace=last_word, text=' '.join(shortest_steno_strokes))
 
-    # Send the shortest steno strokes as a string
-    engine.send_engine_command(f"send_string:{' '.join(shortest_steno_strokes)}")
+    # Process the new action using the formatter
+    engine.formatter.format(undo=[last_word], do=[new_action])
