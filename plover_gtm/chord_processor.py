@@ -12,4 +12,4 @@ import plover.log
 def looksert(engine, _argument):
     retro_formatter = RetroFormatter(engine.translator_state.prev())
     last_word = retro_formatter.last_words(count=1)
-    plover.log.info("Last word: " + last_word)
+    plover.log.info("Last word: " + str(last_word))
