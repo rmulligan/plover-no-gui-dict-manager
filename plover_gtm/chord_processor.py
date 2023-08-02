@@ -19,6 +19,13 @@ def looksert(engine: StenoEngine, _arg: str):
     # Reverse lookup the word to get the steno strokes
     steno_strokes_list = engine.reverse_lookup(last_word)
 
-    # Log all the steno strokes that map to the word
-    for steno_strokes in steno_strokes_list:
-        log.info("Steno strokes for word {}: {}".format(last_word, steno_strokes))
+    # If there are no steno strokes for this word, there's nothing more to do
+    if not steno_strokes_list:
+        log.info(f"No steno strokes found for word '{last_word}'")
+        return
+
+    # Find the shortest steno stroke
+    shortest_steno_strokes = min(steno_strokes_list, key=len)
+
+    # Log the shortest steno strokes for the word
+    log.info(f"Shortest steno strokes for word '{last_word}': {shortest_steno_strokes}")
