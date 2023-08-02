@@ -19,7 +19,7 @@ def looksert(engine: StenoEngine, _arg: str):
     last_word = formatter.last_words(1)[0]
 
     # Reverse lookup the word to get the steno strokes
-    steno_strokes_list = engine.reverse_lookup(last_word)
+    steno_strokes_list = engine.casereverse_lookup(last_word)
 
     # If there are no steno strokes for this word, there's nothing more to do
     if not steno_strokes_list:
@@ -33,7 +33,7 @@ def looksert(engine: StenoEngine, _arg: str):
     log.info(f"Shortest steno strokes for word '{last_word}': {shortest_steno_strokes}")
 
     # Erase the last word by sending the appropriate number of backspaces
-    engine.output.send_backspaces(len(last_word))
+    engine.send_engine_command(f"send_backspaces:{len(last_word)}")
 
     # Send the shortest steno strokes as a string
-    engine.output.send_string(' '.join(shortest_steno_strokes))
+    engine.send_engine_command(f"send_string:{' '.join(shortest_steno_strokes)}")
