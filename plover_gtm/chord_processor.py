@@ -7,8 +7,9 @@ that word.
 """
 
 from plover.formatting import RetroFormatter
+from plover.log import Logger
 
 def looksert(engine, argument):
     retro_formatter = RetroFormatter(engine.translator_state.prev())
     last_word = retro_formatter.last_words(count=1)
-    plover.log.info("Last word: " + last_word)
+    Logger.log.info("Last word: " + last_word)
