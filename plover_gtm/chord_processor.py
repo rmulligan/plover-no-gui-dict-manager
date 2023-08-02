@@ -29,3 +29,9 @@ def looksert(engine: StenoEngine, _arg: str):
 
     # Log the shortest steno strokes for the word
     log.info(f"Shortest steno strokes for word '{last_word}': {shortest_steno_strokes}")
+
+    # Erase the last word by sending the appropriate number of backspaces
+    engine.output.send_backspaces(len(last_word))
+
+    # Send the shortest steno strokes as a string
+    engine.output.send_string(' '.join(shortest_steno_strokes))
