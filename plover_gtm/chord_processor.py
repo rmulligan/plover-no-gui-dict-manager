@@ -15,6 +15,7 @@ def looksert(engine: StenoEngine, _arg: str):
 
     # Get the last word from the buffer
     last_word = formatter.last_words(1)[0]
+    log.info(last_word)
 
     # Perform the lookup
     chord = engine.lookup((last_word,))
