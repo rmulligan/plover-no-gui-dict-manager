@@ -1,0 +1,12 @@
+README.md
+setup.cfg
+setup.py
+plover_gtm/__init__.py
+plover_gtm/chord_processor.py
+plover_gtm.egg-info/PKG-INFO
+plover_gtm.egg-info/SOURCES.txt
+plover_gtm.egg-info/dependency_links.txt
+plover_gtm.egg-info/entry_points.txt
+plover_gtm.egg-info/requires.txt
+plover_gtm.egg-info/top_level.txt
+plover_gtm.egg-info/zip-safe

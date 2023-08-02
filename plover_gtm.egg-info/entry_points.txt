@@ -1,0 +1,2 @@
+[plover.command]
+chord_processing = plover_gtm.chord_processor:ChordProcessingCommand
