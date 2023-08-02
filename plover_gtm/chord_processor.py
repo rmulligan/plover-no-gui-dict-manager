@@ -7,6 +7,7 @@ that word.
 """
 from plover.engine import StenoEngine
 from plover.formatting import RetroFormatter
+from plover.output import Output
 import plover.log as log
 
 def looksert(engine: StenoEngine, _arg: str):
@@ -17,7 +18,7 @@ def looksert(engine: StenoEngine, _arg: str):
     last_word = formatter.last_words(1)[0]
 
     # Reverse lookup the word to get the steno strokes
-    steno_strokes_list = engine.reverse_lookup(last_word)
+    steno_strokes_list = engine.casereverse_lookup(last_word)
 
     # If there are no steno strokes for this word, there's nothing more to do
     if not steno_strokes_list:
@@ -30,8 +31,11 @@ def looksert(engine: StenoEngine, _arg: str):
     # Log the shortest steno strokes for the word
     log.info(f"Shortest steno strokes for word '{last_word}': {shortest_steno_strokes}")
 
-    # Erase the last word by sending the appropriate number of backspaces
-    engine.output.send_backspaces(len(last_word))
+    # Create an instance of Output
+    output = Output()
 
-    # Send the shortest steno strokes as a string
-    engine.output.send_string(' '.join(shortest_steno_strokes))
+    # Erase the last word
+    output.send_backspaces(len(last_word))
+
+    # Output the shortest steno strokes
+    output.send_string('/'.join(shortest_steno_strokes))
