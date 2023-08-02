@@ -15,14 +15,10 @@ def looksert(engine: StenoEngine, _arg: str):
 
     # Get the last word from the buffer
     last_word = formatter.last_words(1)[0]
-    log.info(last_word)
 
-    # Perform the lookup
-    chord = engine.lookup((last_word,))
+    # Reverse lookup the word to get the steno strokes
+    steno_strokes_list = engine.reverse_lookup(last_word)
 
-    if chord:
-        # Log the chord if it was found in the dictionary
-        log.info("Found chord for word {}: {}".format(last_word, chord))
-    else:
-        # If the chord is not found, log a message indicating this
-        log.info("No chord found for word {}".format(last_word))
+    # Log all the steno strokes that map to the word
+    for steno_strokes in steno_strokes_list:
+        log.info("Steno strokes for word {}: {}".format(last_word, steno_strokes))
