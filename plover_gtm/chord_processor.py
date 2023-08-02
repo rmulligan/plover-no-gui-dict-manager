@@ -5,8 +5,7 @@ from plover import engine
 last_words = collections.deque(maxlen=10)
 
 def on_translate(stroke):
-  # Save last word logic
-  pass
+    log('Stroke: ', stroke)
 
 def setup(engine):
   engine.hook_connect('translate_stroke', on_translate)
