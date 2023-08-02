@@ -13,7 +13,8 @@ def setup(engine):
 
 class ChordProcessingCommand:
 
-    def __init__(self):
+    def __init__(self, engine)
+        log('ChordProcessingCommand: ', engine)
         setup(engine)
 
     def lookup(self):
