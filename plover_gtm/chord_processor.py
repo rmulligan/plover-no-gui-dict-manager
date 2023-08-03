@@ -13,8 +13,8 @@ def stroke_to_steno_string(stroke: Stroke) -> str:
     return steno_string
 
 def looksert(ctx, _arg: str):
-    # Create a RetroFormatter instance with the previous translations from the engine
-    retro_formatter = RetroFormatter(ctx.translator_state.translations)
+    # Create a RetroFormatter instance with the previous translations from the context
+    retro_formatter = RetroFormatter(ctx.output)
 
     # Get the last word from the buffer
     last_word = retro_formatter.last_words(1)[0]
