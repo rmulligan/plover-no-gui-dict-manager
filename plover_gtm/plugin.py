@@ -8,3 +8,6 @@ class PloverGtmPlugin:
 
     def start(self):
         self.engine.hook_connect("translated", self.last_word_tracker.on_translated)
+
+def get_instance():
+    return PloverGtmPlugin(StenoEngine())

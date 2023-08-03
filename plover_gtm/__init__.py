@@ -1,5 +1,8 @@
-from plover.engine import StenoEngine
-from .plugin import PloverGtmPlugin
+from .plugin import get_instance
 
-gtm = PloverGtmPlugin(StenoEngine())
-gtm.start()
+def start_plugin(engine):
+    plugin_instance = get_instance()
+    plugin_instance.start()
+
+def stop_plugin(engine):
+    pass  # Add any necessary cleanup code here
