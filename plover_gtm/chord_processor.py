@@ -17,7 +17,7 @@ def looksert(ctx, _arg: str):
     retro_formatter = RetroFormatter(ctx.output)
 
     # Get the last word from the buffer
-    last_word = retro_formatter.last_words(1)[0]
+    last_word = ctx.last_text(1)
 
     # Get the last stroke from the buffer
     last_stroke = retro_formatter.last_strokes(1)[0]
