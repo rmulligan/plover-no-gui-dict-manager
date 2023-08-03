@@ -1,39 +1,31 @@
-"""
-This module provides a Plover command for processing chords.
-When a specific chord is entered, it attempts to replace the last
-fingerspelled word with its steno equivalent. If the word is not in
-the user's dictionary, it prompts the user to enter a new chord for
-that word.
-"""
-from plover.formatting import Formatter, RetroFormatter, _Action
-from plover.engine import StenoEngine
-import plover.log as log
+from plover.formatting import _Action
 from plover.steno import Stroke
+from plover.formatting import RetroFormatter
 
-def looksert(engine: StenoEngine, _arg: str):
-    log.info("looksert command called")
+def stroke_to_steno_string(stroke: Stroke) -> str:
+    """Converts a steno stroke to a string representation."""
+    keys = stroke.steno_keys
+    if keys is None:
+        return ''
+    steno_string = ''.join(keys)
+    if stroke.is_number:
+        steno_string += '#'
+    return steno_string
 
+def looksert(ctx, _arg: str):
     # Create a RetroFormatter instance with the previous translations from the engine
-    retro_formatter = RetroFormatter(engine.translator_state.translations)
+    retro_formatter = RetroFormatter(ctx.translator_state.translations)
 
     # Get the last word from the buffer
     last_word = retro_formatter.last_words(1)[0]
 
-    # Reverse lookup the word to get the steno strokes
-    steno_strokes_list = engine.casereverse_lookup(last_word)
+    # Get the last stroke from the buffer
+    last_stroke = retro_formatter.last_strokes(1)[0]
 
-    # If there are no steno strokes for this word, there's nothing more to do
-    if not steno_strokes_list:
-        log.info(f"No steno strokes found for word '{last_word}'")
-        return
+    # Convert the steno stroke to a string
+    steno_string = stroke_to_steno_string(last_stroke)
 
-    # Find the shortest steno stroke
-    shortest_steno_strokes = min(steno_strokes_list, key=len)
+    # Create a new action that replaces the last word with the steno string
+    action = _Action(prev_replace=last_word, text=steno_string)
 
-    # Log the shortest steno strokes for the word
-    log.info(f"Shortest steno strokes for word '{last_word}': {shortest_steno_strokes}")
-
-    # Create a new action that replaces the last word with the shortest steno strokes
-    action = _Action(prev_replace=last_word, text=' '.join(shortest_steno_strokes))
-
-    retro_formatter.format([], [action], action)
+    return action
