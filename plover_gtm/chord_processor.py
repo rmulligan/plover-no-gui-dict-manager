@@ -15,10 +15,8 @@ def inline_lookup_chord(translator, _stroke, _):
 
         # Send backspaces to delete the last word
         backspaces = len(last_word)
-        backspace_action = _Action(text='*' * backspaces)
-        translator.translate_action(backspace_action)
+        PloverGtmPlugin.get_instance()._engine._output.send_backspaces(backspaces)
 
         # Send the brief
         brief = '/' + '/'.join(shortest_steno_strokes) + '/'
-        brief_action = _Action(text=brief)
-        translator.translate_action(brief_action)
+        PloverGtmPlugin.get_instance()._engine._output.send_string(brief)
