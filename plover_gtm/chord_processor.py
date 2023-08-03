@@ -1,8 +1,8 @@
 from plover import log
-# from plover_gtm.plugin import gtm
+from plover_gtm.plugin import PloverGtmPlugin
 
 def inline_lookup_chord(translator, _stroke, _):
-    last_word = 'test'
+    last_word = PloverGtmPlugin.get_instance().get_last_word()
     steno_strokes_list = translator.get_dictionary().casereverse_lookup(last_word)
 
     if not steno_strokes_list:

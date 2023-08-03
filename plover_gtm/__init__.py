@@ -4,4 +4,4 @@ from plover import log
 
 def setup(engine: StenoEngine):
     log.info("Setup called")
-    return PloverGtmPlugin(engine)
+    PloverGtmPlugin.set_instance(PloverGtmPlugin(engine))
