@@ -14,9 +14,9 @@ def inline_lookup_chord(translator, _stroke, _):
         log.info("Shortest steno strokes for word '{}': {}".format(last_word, shortest_steno_strokes))
 
         # Send backspaces to delete the last word
-        backspaces = len(last_word)
-        PloverGtmPlugin.get_instance()._engine._output.send_backspaces(backspaces)
+        backspaces = '\b' * len(last_word)
+        PloverGtmPlugin.get_instance()._engine.send_string(backspaces)
 
         # Send the brief
         brief = '/' + '/'.join(shortest_steno_strokes) + '/'
-        PloverGtmPlugin.get_instance()._engine._output.send_string(brief)
+        PloverGtmPlugin.get_instance()._engine.send_string(brief)
