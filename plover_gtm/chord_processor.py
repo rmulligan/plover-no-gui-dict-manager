@@ -15,7 +15,7 @@ def inline_lookup_chord(translator, _stroke, _):
 
 def get_all_strokes(translator, word):
     # Use the lookup function to get all steno strokes for the word
-    all_strokes = translator.get_dictionary().lookup(word)
+    all_strokes = translator.get_dictionary().lookup(word) or []
 
     # Filter out any None values (these are returned when the word is not found in a dictionary)
     all_strokes = [strokes for strokes in all_strokes if strokes is not None]
