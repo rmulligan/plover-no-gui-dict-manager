@@ -10,13 +10,13 @@ class PloverGtmPlugin:
 
     def start(self):
         log.info("PloverGtmPlugin: start")
-        self._engine.hook_connect("translation_added", self.on_translation_added)
+        self._engine.hook_connect("translated", self.on_translation_added)
 
     def stop(self):
         log.info("PloverGtmPlugin: stop")
-        self._engine.hook_disconnect("translation_added", self.on_translation_added)
 
-    def on_translation_added(self, args):
+        self._engine.hook_disconnect("translated", self.on_translation_added)
+
+    def on_translation_added(self, old, new):
         log.info("PloverGtmPlugin: on_translation_added")
-        _, old, new = args
         self._last_word_tracker.on_translated(old, new)
