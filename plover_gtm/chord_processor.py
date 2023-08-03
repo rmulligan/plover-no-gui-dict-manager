@@ -1,31 +1,13 @@
-from plover.formatting import _Action
+from plover.engine import Translator
 from plover.steno import Stroke
-from plover.formatting import RetroFormatter
 
-def stroke_to_steno_string(stroke: Stroke) -> str:
-    """Converts a steno stroke to a string representation."""
-    keys = stroke.steno_keys
-    if keys is None:
-        return ''
-    steno_string = ''.join(keys)
-    if stroke.is_number:
-        steno_string += '#'
-    return steno_string
+def lookup_chord(translator, _stroke, _):
+    last_word = translator.get_last_translation().english.lower()
+    steno_strokes_list = translator.get_dictionary().casereverse_lookup(last_word)
 
-def looksert(ctx, _arg: str):
-    # Create a RetroFormatter instance with the previous translations from the context
-    retro_formatter = RetroFormatter(ctx.output)
+    if not steno_strokes_list:
+        return "No steno strokes found for word '{}'".format(last_word)
 
-    # Get the last word from the buffer
-    last_word = ctx.last_text(1)
+    shortest_steno_strokes = min(steno_strokes_list, key=len)
 
-    # Get the last stroke from the buffer
-    last_stroke = retro_formatter.last_strokes(1)[0]
-
-    # Convert the steno stroke to a string
-    steno_string = stroke_to_steno_string(last_stroke)
-
-    # Create a new action that replaces the last word with the steno string
-    action = _Action(prev_replace=last_word, text=steno_string)
-
-    return action
+    return "Shortest steno strokes for word '{}': {}".format(last_word, shortest_steno_strokes)
