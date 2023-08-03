@@ -16,6 +16,7 @@ class PloverGtmPlugin:
     @classmethod
     def set_instance(cls, instance):
         cls._instance = instance
+        return cls._instance
 
     def __init__(self, engine: StenoEngine):
         if self._instance is not None:
