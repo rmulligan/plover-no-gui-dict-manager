@@ -1,11 +1,11 @@
 from plover import log
+from plover.formatting import _Action
 from plover_gtm.plugin import PloverGtmPlugin
 
 def inline_lookup_chord(translator, _stroke, _):
     last_word = PloverGtmPlugin.get_instance().get_last_word()
-
-    # Get all steno strokes for the last word
-    steno_strokes_list = get_all_strokes(translator, last_word)
+    all_dictionaries = translator.get_dictionary()
+    steno_strokes_list = all_dictionaries.reverse_lookup(last_word)
 
     if not steno_strokes_list:
         log.info("No steno strokes found for word '{}'".format(last_word))
@@ -13,18 +13,12 @@ def inline_lookup_chord(translator, _stroke, _):
         shortest_steno_strokes = min(steno_strokes_list, key=len)
         log.info("Shortest steno strokes for word '{}': {}".format(last_word, shortest_steno_strokes))
 
-def get_all_strokes(translator, word):
-    # Use the lookup function to get all steno strokes for the word
-    all_dictionaries = translator.get_dictionary()
+        # Send backspaces to delete the last word
+        backspaces = len(last_word)
+        backspace_action = _Action(text='*' * backspaces)
+        translator.translate_action(backspace_action)
 
-    # Log the content of each dictionary
-    for dictionary in all_dictionaries.dicts:
-        log.info("Dictionary content: {}".format(dictionary))
-
-    all_strokes = all_dictionaries.reverse_lookup(word)
-
-    # Filter out any None values (these are returned when the word is not found in a dictionary)
-    all_strokes = [strokes for strokes in all_strokes if strokes is not None]
-
-    # Return the list of all steno strokes
-    return all_strokes
+        # Send the brief
+        brief = '/' + '/'.join(shortest_steno_strokes) + '/'
+        brief_action = _Action(text=brief)
+        translator.translate_action(brief_action)
