@@ -14,6 +14,9 @@ def inline_lookup_chord(translator, _stroke, _):
         log.info("Shortest steno strokes for word '{}': {}".format(last_word, shortest_steno_strokes))
 
 def get_all_strokes(translator, word):
+    dictionary = translator.get_dictionary()
+    log.info("Dictionary entries: {}".format(dictionary))
+
     # Use the lookup function to get all steno strokes for the word
     all_strokes = translator.get_dictionary().lookup(word) or []
 
