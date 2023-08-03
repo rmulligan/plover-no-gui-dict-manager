@@ -21,3 +21,6 @@ class PloverGtmPlugin:
         log.info("PloverGtmPlugin: on_translation_added triggered")
         if new:
             self._last_word_tracker.on_translated(old[-1] if old else None, new[-1])
+
+    def get_last_word(self):
+        return self._last_word_tracker.get_last_word()
