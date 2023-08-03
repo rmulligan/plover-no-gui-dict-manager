@@ -14,11 +14,14 @@ def inline_lookup_chord(translator, _stroke, _):
         log.info("Shortest steno strokes for word '{}': {}".format(last_word, shortest_steno_strokes))
 
 def get_all_strokes(translator, word):
-    dictionary = translator.get_dictionary()
-    log.info("Dictionary entries: {}".format(dictionary))
-
     # Use the lookup function to get all steno strokes for the word
-    all_strokes = translator.get_dictionary().lookup(word) or []
+    all_dictionaries = translator.get_dictionary()
+
+    # Log the content of each dictionary
+    for dictionary in all_dictionaries.dicts:
+        log.info("Dictionary content: {}".format(dictionary))
+
+    all_strokes = all_dictionaries.reverse_lookup(word)
 
     # Filter out any None values (these are returned when the word is not found in a dictionary)
     all_strokes = [strokes for strokes in all_strokes if strokes is not None]
