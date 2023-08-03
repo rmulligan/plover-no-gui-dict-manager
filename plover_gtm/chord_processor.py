@@ -1,19 +1,15 @@
 from plover.engine import Translator
 from plover.steno import Stroke
-from plover.translation import Translation
+from plover_gtm_plugin import last_word_tracker
 
 def lookup_chord(translator, _stroke, _):
-    buffer = translator.get_state().buffer
-    if len(buffer) > 0 and isinstance(buffer[-1], Translation):
-        last_translation = buffer[-1].english.lower()
-    else:
-        last_translation = ""
+    last_word = last_word_tracker.get_last_word()
 
-    steno_strokes_list = translator.get_dictionary().casereverse_lookup(last_translation)
+    steno_strokes_list = translator.get_dictionary().casereverse_lookup(last_word)
 
     if not steno_strokes_list:
-        return "No steno strokes found for word '{}'".format(last_translation)
+        return "No steno strokes found for word '{}'".format(last_word)
 
     shortest_steno_strokes = min(steno_strokes_list, key=len)
 
-    return "Shortest steno strokes for word '{}': {}".format(last_translation, shortest_steno_strokes)
+    return "Shortest steno strokes for word '{}': {}".format(last_word, shortest_steno_strokes)
