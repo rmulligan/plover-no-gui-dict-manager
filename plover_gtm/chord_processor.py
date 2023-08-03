@@ -1,2 +1,5 @@
+from plover import log
+
 def inline_lookup_chord(translator, _stroke, _):
-    return "Hello, World!"
+    log.info("Hello, World!")
+    pass
