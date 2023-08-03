@@ -1,9 +1,11 @@
 from plover.engine import Translator
 from plover.steno import Stroke
+from plover.translation import Translation
 
 def lookup_chord(translator, _stroke, _):
-    if len(translator.translations) > 0:
-        last_translation = translator.translations[-1].english.lower()
+    buffer = translator.get_state().buffer
+    if len(buffer) > 0 and isinstance(buffer[-1], Translation):
+        last_translation = buffer[-1].english.lower()
     else:
         last_translation = ""
 
