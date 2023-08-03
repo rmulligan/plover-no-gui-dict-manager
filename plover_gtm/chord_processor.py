@@ -1,3 +1,5 @@
+from plover_gtm.plugin import PloverGtmPlugin
+
 import os
 
 def inline_lookup_chord(translator, _stroke, _):
