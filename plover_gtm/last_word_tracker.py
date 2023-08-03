@@ -6,8 +6,8 @@ class LastWordTracker:
         self.last_word = None
 
     def on_translated(self, _old: _Action, new: _Action):
-        if new is not None and new.english is not None:
-            self.last_word = new.english
+        if new is not None and new.text is not None:
+            self.last_word = new.text
 
     def get_last_word(self):
         return self.last_word
