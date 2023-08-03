@@ -18,5 +18,6 @@ class PloverGtmPlugin:
         self._engine.hook_disconnect("translated", self.on_translation_added)
 
     def on_translation_added(self, old, new):
-        log.info("PloverGtmPlugin: on_translation_added")
-        self._last_word_tracker.on_translated(old, new)
+        log.info("PloverGtmPlugin: on_translation_added triggered")
+        if new:
+            self._last_word_tracker.on_translated(old[-1] if old else None, new[-1])
