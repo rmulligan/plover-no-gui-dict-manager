@@ -3,7 +3,7 @@ from plover_gtm.plugin import PloverGtmPlugin
 
 def start_capture(engine, stroke, command):
     log.info("start_capture")
-    pass
+    PloverGtmPlugin.get_instance().start_capture()
 
 # def end_capture(engine, stroke, command):
 #     log.info("end_capture")
