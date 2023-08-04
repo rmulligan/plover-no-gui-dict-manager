@@ -1,5 +1,5 @@
 from plover import log
-#from plover_gtm.plugin import PloverGtmPlugin
+from plover_gtm.plugin import PloverGtmPlugin
 
 def start_capture(engine, stroke, command):
     log.info("start_capture")
