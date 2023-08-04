@@ -47,7 +47,7 @@ class PloverGtmPlugin:
     def end_capture(self):
         log.info("PloverGtmPlugin: end_capture")
         with open(os.path.expanduser("~/.config/plover/typed_words.log"), "a") as f:
-            f.write(" ".join(self._capture_buffer))  # Join the words with spaces
+            f.write("".join(self._capture_buffer))  # Join the words with spaces
             f.write("\n")  # Write a newline character after each capture session
         self._capturing = False
         self._capture_buffer = []
