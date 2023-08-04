@@ -1,9 +1,19 @@
+from plover import log
+from plover.formatting import _Action
 from plover_gtm.plugin import PloverGtmPlugin
 
-import os
+def start_capture(engine, stroke, command):
+    PloverGtmPlugin.get_instance().start_capture()
+    return _Action()
 
-def inline_lookup_chord(engine, _stroke, _):
-    last_word = PloverGtmPlugin.get_instance().get_last_word()
-    if last_word:
-        with open(os.path.expanduser("~/.config/plover/typed_words.log"), 'a') as log_file:
-            log_file.write(last_word + '\n')
+def end_capture(engine, stroke, command):
+    PloverGtmPlugin.get_instance().end_capture()
+    return _Action()
+
+def abort_capture(engine, stroke, command):
+    PloverGtmPlugin.get_instance().abort_capture()
+    return _Action()
+
+def capture_word(engine, stroke, command):
+    PloverGtmPlugin.get_instance().capture_word(command)
+    return _Action()
